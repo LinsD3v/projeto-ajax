@@ -24,5 +24,15 @@ const upload = multer({storage }).single('arquivo')
 // para salvar o arquivo no destino correto
 
 app.post('/upload', (req, res) =>{
-    
+    upload(req, res, err => {
+        if(err) {
+            return res.end('Ocorreu um erro.')
+        }
+
+        res.end('Concluido com sucesso.')
+    })
 })
+
+app.listen(8080, '0.0.0.0', () => 
+    console.log('Executando...')
+) // Coloca o servidor no ar, pela porta 8080   

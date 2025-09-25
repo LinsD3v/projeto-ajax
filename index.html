@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        nav {
+            font-size: 2em;
+        }
+
+        nav a{
+            text-decoration: none;
+            color: #000;
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#">Séries</a>
+        <a href="#">Linguagens</a>
+
+        <div class='pagina'>
+
+        </div>
+    </nav>
+
+    <script>
+        function navegarViaAjax(url, selector, push = true){
+            if(!url || !selector) return;
+            const elemento = document.querySelector(selector)
+            fetch(url)
+            .then(resp => resp.text())
+            .then(html => elemento.innerHTML = html)
+
+            if(push){
+                history.pushState({ selector }, "Página Ajax0", url)
+            }
+        }
+
+        document.querySelectorAll('[wm-link]').forEach(link => {
+            const url = link.attributes['wm-link'].values
+            const selectorDestino = link.attributes['wm-destino'].values
+
+            link.onclick = e => {
+                e.preventDefault()
+                navegarViaAjax(url, selectorDestino)
+            }
+            window.onpopstate = e => {
+                if(e.state){
+                    navegarViaAjax(window.location.href, e.state.selector, false)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
