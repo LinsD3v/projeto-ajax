@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         callback(null, "./upload")
     },
     filename: function(req, file, callback){
-        callback(null, '${Date.now()}_${file.originalname}')
+        callback(null, `${Date.now()}_${file.originalname}`)
     }
 }) // Rota que recebe um arquivo 
 
@@ -33,6 +33,6 @@ app.post('/upload', (req, res) =>{
     })
 })
 
-app.listen(8080, '0.0.0.0', () => 
+app.listen(8080, () => 
     console.log('Executando...')
 ) // Coloca o servidor no ar, pela porta 8080   
